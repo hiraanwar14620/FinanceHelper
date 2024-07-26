@@ -1,28 +1,23 @@
-import express  from 'express';
-import mongoose from 'mongoose';
-import expenseModel from '../entities/expense.js';
+import express from 'express';
+import ExpenseModel from '../db/models/expense.js';
 
-const app = express();
 const expenseRoutes = express.Router();
 
-expenseRoutes.get('/expense', (req, res) => {
-  res.send('Hello World!');
-})
+expenseRoutes.get('/', async (req, res) => {
+	const expenses = await ExpenseModel.find();
+	res.status(200).send(expenses);
+});
 
-expenseRoutes.post("/expense",async (req, res) =>
-{
-    mongoose.connect("mongodb://localhost:27017/FinanceHelper")
-    const income = new expenseModel({
-        item : req.body.item,
-        price : req.body.price,
-        quantity : req.body.quantity,
-        date : req.body.date,
+expenseRoutes.post('/', async (req, res) => {
+	let expense = {
+		item: req.body.item,
+		price: req.body.price,
+		quantity: req.body.quantity,
+		date: req.body.date
+	};
 
-    });
-    await income.save();
-    res.status(200).send();
-
-})
+	expense = await ExpenseModel.create(expense);
+	res.status(200).send(expense);
+});
 
 export default expenseRoutes;
-
