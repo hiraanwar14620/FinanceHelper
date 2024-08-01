@@ -2,9 +2,10 @@ import express from 'express';
 import expenseRoutes from './routes/expense.js';
 import incomeRoutes from './routes/income.js';
 import cors from 'cors';
+import config from './config.js';
 
 const app = express();
-const port = 3000;
+const port = config.appPort;
 
 app.use(express.json());
 app.use(cors());
