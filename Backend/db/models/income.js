@@ -1,12 +1,9 @@
-import mongoose from "mongoose";
+import mongoose from '../db.js';
 
-
-const income = new mongoose.Schema({
-  
-  amount: Number,
-  description: String,
-  date: Date,
+const IncomeModel = mongoose.model('Income', {
+	amount: Number,
+	description: String,
+	date: Date
 });
 
-const incomeModel = mongoose.model("income",income);
-export default incomeModel;
+export default IncomeModel;

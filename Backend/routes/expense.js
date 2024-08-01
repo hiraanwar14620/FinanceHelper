@@ -9,12 +9,12 @@ expenseRoutes.get('/', async (req, res) => {
 });
 
 expenseRoutes.post('/', async (req, res) => {
-	let expense = {
+	let expense = new ExpenseModel({
 		item: req.body.item,
 		price: req.body.price,
 		quantity: req.body.quantity,
 		date: req.body.date
-	};
+	});
 
 	expense = await ExpenseModel.create(expense);
 	res.status(200).send(expense);

@@ -8,7 +8,6 @@
 		</div>
 	</div>
 	<div class="card">
-
 		<div class="card-body">
 			<table class="table table-striped">
 				<thead>
@@ -22,7 +21,7 @@
 				</thead>
 				<tbody>
 					<tr v-for="expense in this.expenses">
-						<td>{{ expense.date }}</td>
+						<td>{{ expense.date && expense.date !== '' ? expense.date.toString().substr(0, 10) : '' }}</td>
 						<td>{{ expense.item }}</td>
 						<td>{{ expense.price }}</td>
 						<td>{{ expense.quantity }}</td>
@@ -35,25 +34,25 @@
 </template>
 
 <script>
-import { RouterLink } from 'vue-router';
+	import {RouterLink} from 'vue-router';
 
-export default {
-	data() {
-		return {
-			expenses: []
-		};
-	},
-	mounted() {
-		fetch('http://localhost:3000/api/expenses')
-			.then(response => response.json())
-			.then(json => {
-				this.expenses = json;
-			})
-			.catch(error => {
-				alert('Error occured while getting expenses');
-				console.error(error);
-			});
-	},
-	components: { RouterLink }
-};
+	export default {
+		data() {
+			return {
+				expenses: []
+			};
+		},
+		mounted() {
+			fetch('http://localhost:3000/api/expenses')
+				.then(response => response.json())
+				.then(json => {
+					this.expenses = json;
+				})
+				.catch(error => {
+					alert('Error occured while getting expenses');
+					console.error(error);
+				});
+		},
+		components: {RouterLink}
+	};
 </script>
