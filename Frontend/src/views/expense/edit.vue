@@ -30,34 +30,34 @@
 </template>
 
 <script>
-export default {
-	data() {
-		return {
-			expense: {
-				item: '',
-				price: 0,
-				quantity: 1,
-				date: new Date().toISOString().substr(0, 10)
-			}
-		};
-	},
-	methods: {
-		saveExpense() {
-			fetch('http://localhost:3000/api/expenses', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify(this.expense)
-			})
-				.then(() => {
-					this.$router.push('/');
+	export default {
+		data() {
+			return {
+				expense: {
+					item: '',
+					price: 0,
+					quantity: 1,
+					date: new Date().toISOString().substr(0, 10)
+				}
+			};
+		},
+		methods: {
+			saveExpense() {
+				fetch('http://localhost:3000/api/expenses', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(this.expense)
 				})
-				.catch(err => {
-					alert('Error occured while saving expense');
-					console.log(err);
-				});
+					.then(() => {
+						this.$router.push('/expenses');
+					})
+					.catch(err => {
+						alert('Error occured while saving expense');
+						console.log(err);
+					});
+			}
 		}
-	}
-};
+	};
 </script>

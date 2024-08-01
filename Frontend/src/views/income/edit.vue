@@ -26,33 +26,33 @@
 </template>
 
 <script>
-export default {
-	data() {
-		return {
-			income: {
-				description: '',
-				amount: 0,
-				date: new Date().toISOString().substr(0, 10)
-			}
-		};
-	},
-	methods: {
-		saveIncome() {
-			fetch('http://localhost:3000/api/income', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify(this.income)
-			})
-				.then(() => {
-					this.$router.push('/');
+	export default {
+		data() {
+			return {
+				income: {
+					description: '',
+					amount: 0,
+					date: new Date().toISOString().substr(0, 10)
+				}
+			};
+		},
+		methods: {
+			saveIncome() {
+				fetch('http://localhost:3000/api/incomes', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(this.income)
 				})
-				.catch(err => {
-					alert('Error occured while saving income');
-					console.log(err);
-				});
+					.then(() => {
+						this.$router.push('/incomes');
+					})
+					.catch(err => {
+						alert('Error occured while saving income');
+						console.log(err);
+					});
+			}
 		}
-	}
-};
+	};
 </script>

@@ -8,7 +8,6 @@
 		</div>
 	</div>
 	<div class="card">
-
 		<div class="card-body">
 			<table class="table table-striped">
 				<thead>
@@ -20,7 +19,7 @@
 				</thead>
 				<tbody>
 					<tr v-for="income in this.incomes">
-						<td>{{ income.date}}</td>
+						<td>{{ income.date && income.date !== '' ? income.date.toString().substr(0, 10) : '' }}</td>
 						<td>{{ income.amount }}</td>
 						<td>{{ income.description }}</td>
 					</tr>
@@ -31,27 +30,26 @@
 </template>
 
 <script>
-import { RouterLink } from 'vue-router';
+	import {RouterLink} from 'vue-router';
 
-export default {
-	data() {
-		return {
-			incomes: []
-		};
-	},
-	mounted() {
-		fetch('http://localhost:3000/api/incomes')
-			.then(response => response.json())
-			.then(json => {
-				this.incomes = json;
-				console.log('This is the income', this.incomes);
-			})
-			.catch(error => {
-				alert('Error occured while getting incomes');
-				console.error(error);
-			});
-	},
-	components: { RouterLink }
-};
+	export default {
+		data() {
+			return {
+				incomes: []
+			};
+		},
+		mounted() {
+			fetch('http://localhost:3000/api/incomes')
+				.then(response => response.json())
+				.then(json => {
+					this.incomes = json;
+					console.log('This is the income', this.incomes);
+				})
+				.catch(error => {
+					alert('Error occured while getting incomes');
+					console.error(error);
+				});
+		},
+		components: {RouterLink}
+	};
 </script>
-
