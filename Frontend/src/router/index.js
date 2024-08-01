@@ -18,22 +18,31 @@ const router = createRouter({
 			component: () => import('../views/AboutView.vue')
 		},
 		{
-			path: '/expenses/',
-			name: 'expenses',
+			path: '/expenses',
+			name: 'expense',
 			// route level code-splitting
 			// this generates a separate chunk (About.[hash].js) for this route
 			// which is lazy-loaded when the route is visited.
 			component: () => import('../views/expense/index.vue')
 		},
 		{
-			path: '/expenses/create',
+			path: '/expense/create',
 			name: 'add-expense',
-			// route level code-splitting
-			// this generates a separate chunk (About.[hash].js) for this route
-			// which is lazy-loaded when the route is visited.
 			component: () => import('../views/expense/edit.vue')
+		},
+    {
+			path: '/incomes/create',
+			name: 'add-income',
+			component: () => import('../views/income/index.vue')
+		},
+		{
+			path: '/incomes',
+			name: 'income',
+			component: () => import('../views/income/index.vue')
 		}
+		
 	]
 });
 
 export default router;
+

@@ -1,9 +1,9 @@
 <template>
 	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-		<h1 class="h2">Expenses</h1>
+		<h1 class="h2">Income</h1>
 		<div class="btn-toolbar mb-2 mb-md-0">
 			<div class="btn-group me-2">
-				<RouterLink to="/expenses/create" class="btn btn-sm btn-outline-primary">Add Expense</RouterLink>
+				<RouterLink to="/incomes/create" class="btn btn-sm btn-outline-primary">Add Income</RouterLink>
 			</div>
 		</div>
 	</div>
@@ -14,19 +14,15 @@
 				<thead>
 					<tr>
 						<th>Date</th>
-						<th>Item</th>
-						<th>Price</th>
-						<th>Quantity</th>
-						<th>Total</th>
+						<th>Amount</th>
+						<th>Description</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr v-for="expense in this.expenses">
-						<td>{{ expense.date }}</td>
-						<td>{{ expense.item }}</td>
-						<td>{{ expense.price }}</td>
-						<td>{{ expense.quantity }}</td>
-						<td>{{ expense.quantity * expense.price }}</td>
+					<tr v-for="income in this.incomes">
+						<td>{{ income.date}}</td>
+						<td>{{ income.amount }}</td>
+						<td>{{ income.description }}</td>
 					</tr>
 				</tbody>
 			</table>
@@ -40,20 +36,22 @@ import { RouterLink } from 'vue-router';
 export default {
 	data() {
 		return {
-			expenses: []
+			incomes: []
 		};
 	},
 	mounted() {
-		fetch('http://localhost:3000/api/expenses')
+		fetch('http://localhost:3000/api/incomes')
 			.then(response => response.json())
 			.then(json => {
-				this.expenses = json;
+				this.incomes = json;
+				console.log('This is the income', this.incomes);
 			})
 			.catch(error => {
-				alert('Error occured while getting expenses');
+				alert('Error occured while getting incomes');
 				console.error(error);
 			});
 	},
 	components: { RouterLink }
 };
 </script>
+
