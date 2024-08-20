@@ -17,6 +17,16 @@ incomeRoutes.post('/', async (req, res) => {
 
 	income = await IncomeModel.create(income);
 	res.status(200).send(income);
+
 });
+  incomeRoutes.delete('/:id',async(req,res) =>{
+	const id =  req.params.id;
+ await IncomeModel.deleteOne({
+   _id: id
+   
+ });
+ res.status(200).send(true);
+}
+);
 
 export default incomeRoutes;
