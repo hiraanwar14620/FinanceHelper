@@ -32,7 +32,17 @@ expenseRoutes.post('/', async (req, res) => {
 	expense = await ExpenseModel.create(expense);
 	res.status(200).send(expense);
 });
+expenseRoutes.post('/', async (req, res) => {
+	let expense = new ExpenseModel({
+		item: req.body.item,
+		price: req.body.price,
+		quantity: req.body.quantity,
+		date: req.body.date
+	});
 
+	expense = await ExpenseModel.create(expense);
+	res.status(200).send(expense);
+});
 expenseRoutes.delete('/:id',async(req,res) =>{
 	 const id =  req.params.id;
   await ExpenseModel.deleteOne({

@@ -49,8 +49,13 @@ export default {
 				amount: 0,
 				date: new Date().toISOString().substr(0, 10)
 			},
-
+            isDateValid: true
 		};
+	},
+	mounted(){
+		const id = useRoute().params.id;
+		if(id) 	
+		this.getIncome(id)
 	},
 	computed: {
 		checkDateValidity() {
@@ -66,8 +71,52 @@ export default {
 		}
 	},
 	methods: {
-		saveIncome() {
+		getIncome(id){
+		
+		fetch('http://localhost:3000/api/incomes/'+id)
+			.then(response => response.json())
+			.then(json => {
+				this.income = json;
+				console.log(this.income);
+			})
+			.catch(error => {
+				alert('Error occured while getting income');
+				console.error(error);
+			});
 
+	},
+	updateIncome(id){
+			const now = new Date();
+			const selectedDate = new Date(this.income.date);
+
+			if (selectedDate.getFullYear() > now.getFullYear()
+				|| selectedDate.getMonth() > now.getMonth()
+				|| selectedDate.getDate() > now.getDate()) {
+				this.isDateValid = false;
+				return;
+			}
+			fetch('http://localhost:3000/api/incomes/'+id, {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(this.income)
+			})
+				.then(() => {
+					this.$router.push('/incomes');
+				})
+				.catch(err => {
+					alert('Error occured while saving incomes');
+					console.log(err);
+				});
+
+
+		},
+		saveIncome(_id) {
+			if(_id){
+				console.log(_id);
+				this.updateIncome(_id);
+			}
 			fetch('http://localhost:3000/api/incomes', {
 				method: 'POST',
 				headers: {

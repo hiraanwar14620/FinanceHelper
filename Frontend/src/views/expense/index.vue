@@ -100,12 +100,7 @@ export default {
 					.then(res => console.log(res))
 
 			})
-
-		}
-		//////
-
-
-
+      }
 	},
 
 	components: { RouterLink }

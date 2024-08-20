@@ -42,7 +42,7 @@
 					</div>
 				</div>
 				<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-					<button type="button" v-on:click="this.saveExpense()" class="btn btn-primary">Save</button>
+					<button type="button" v-on:click="this.saveExpense(this.expense._id)" class="btn btn-primary">Save</button>
 				</div>
 			</form>
 		</div>
@@ -82,7 +82,36 @@ export default {
 					console.error(error);
 				});
 		},
-		saveExpense() {
+		updateExpense(id){
+			const now = new Date();
+			const selectedDate = new Date(this.expense.date);
+
+			if (selectedDate.getFullYear() > now.getFullYear()
+				|| selectedDate.getMonth() > now.getMonth()
+				|| selectedDate.getDate() > now.getDate()) {
+				this.isDateValid = false;
+				return;
+			}
+			fetch('http://localhost:3000/api/expenses/'+id, {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(this.expense)
+			})
+				.then(() => {
+					this.$router.push('/expenses');
+				})
+				.catch(err => {
+					alert('Error occured while saving expense');
+					console.log(err);
+				});
+          },
+		saveExpense(_id) {
+			if(_id){
+				console.log(_id);
+				this.updateExpense(_id);
+			}
 			const now = new Date();
 			const selectedDate = new Date(this.expense.date);
 
