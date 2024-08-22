@@ -1,0 +1,14 @@
+{
+	"name": "financehelper",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"format": "prettier --write ./"
+	},
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"prettier": "^3.3.3"
+	}
+}

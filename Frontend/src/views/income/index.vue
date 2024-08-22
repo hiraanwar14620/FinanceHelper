@@ -12,7 +12,6 @@
 			<table class="table table-striped">
 				<thead>
 					<tr>
-
 						<th>Date</th>
 						<th>Amount</th>
 						<th>Description</th>
@@ -20,12 +19,11 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr v-for="(income, index) in this.incomes">
+					<tr v-for="(income, index) in this.incomes" v-bind:key="index">
 						<td>{{ income.date && income.date !== '' ? income.date.toString().substr(0, 10) : '' }}</td>
 						<td>{{ income.amount }}</td>
 						<td>{{ income.description }}</td>
-						<td> <i class="bi bi-trash" v-on:click="deleteIncome(income._id)"></i> <i class="bi bi-pen"></i>
-						</td>
+						<td> <i class="bi bi-trash" v-on:click="deleteIncome(income._id)"></i> <i class="bi bi-pen"></i> </td>
 					</tr>
 				</tbody>
 			</table>
@@ -37,76 +35,65 @@
 						<h4 class="modal-title">Delete Row</h4>
 						<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 					</div>
-					<div class="modal-body">
-						Are you sure to Delete this row?
-					</div>
+					<div class="modal-body"> Are you sure to Delete this row? </div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-primary" ref="deleteBtn">Delete</button>
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 					</div>
-
-
-
 				</div>
 			</div>
 		</div>
-
 	</div>
 </template>
 
 <script>
-import { RouterLink } from 'vue-router';
-import * as bootstrap from 'bootstrap';
+	import { RouterLink } from 'vue-router';
+	import * as bootstrap from 'bootstrap';
 
-export default {
-	data() {
-		return {
-			incomes: []
-		};
-	},
-	mounted() {
-		this.getAllIncomes();
-	},
-	methods: {
-		getAllIncomes() {
-			fetch('http://localhost:3000/api/incomes')
-				.then(response => response.json())
-				.then(json => {
-					this.incomes = json;
-				})
-				.catch(error => {
-					alert('Error occured while getting incomes');
-					console.error(error);
-				});
+	export default {
+		data() {
+			return {
+				incomes: []
+			};
 		},
-		deleteIncome(id) {
-			const context = this;
-			const myModal = new bootstrap.Modal(this.$refs.myModal);
-			myModal.show()
-			this.$refs.deleteBtn.addEventListener("click", function () {
-
-				fetch(`http://localhost:3000/api/incomes/${id}`, {
-					method: 'DELETE',
-				})
-					.then(res => res.json())
-					.then(() => {
-						myModal.hide();
-						context.getAllIncomes();
+		mounted() {
+			this.getAllIncomes();
+		},
+		methods: {
+			getAllIncomes() {
+				fetch('http://localhost:3000/api/incomes')
+					.then(response => response.json())
+					.then(json => {
+						this.incomes = json;
 					})
-					.then(res => console.log(res))
+					.catch(error => {
+						alert('Error occured while getting incomes');
+						console.error(error);
+					});
+			},
+			deleteIncome(id) {
+				const context = this;
+				const myModal = new bootstrap.Modal(this.$refs.myModal);
+				myModal.show();
+				this.$refs.deleteBtn.addEventListener('click', function () {
+					fetch(`http://localhost:3000/api/incomes/${id}`, {
+						method: 'DELETE'
+					})
+						.then(res => res.json())
+						.then(() => {
+							myModal.hide();
+							context.getAllIncomes();
+						})
+						.then(res => console.log(res));
+				});
+			}
+		},
 
-			})
-
-		}
-
-
-	},
-
-	components: { RouterLink }
-};
+		components: { RouterLink }
+	};
 </script>
 <style>
-.bi {
-	margin: 2px;
-}
+	.bi {
+		margin: 2px;
+	}
 </style>
