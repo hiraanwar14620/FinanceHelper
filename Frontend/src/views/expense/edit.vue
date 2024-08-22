@@ -90,11 +90,7 @@
 						console.log(err);
 					});
 			},
-			saveExpense(_id) {
-				if (_id) {
-					console.log(_id);
-					this.updateExpense(_id);
-				}
+			addExpense() {
 				const now = new Date();
 				const selectedDate = new Date(this.expense.date);
 
@@ -116,6 +112,13 @@
 						alert('Error occured while saving expense');
 						console.log(err);
 					});
+			},
+			saveExpense(_id) {
+				if (_id) {
+					this.updateExpense(_id);
+				} else {
+					this.addExpense();
+				}
 			}
 		}
 	};

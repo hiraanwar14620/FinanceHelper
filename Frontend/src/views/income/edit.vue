@@ -94,11 +94,7 @@
 						console.log(err);
 					});
 			},
-			saveIncome(_id) {
-				if (_id) {
-					console.log(_id);
-					this.updateIncome(_id);
-				}
+			addIncome() {
 				fetch('http://localhost:3000/api/incomes', {
 					method: 'POST',
 					headers: {
@@ -113,6 +109,13 @@
 						alert('Error occured while saving income');
 						console.log(err);
 					});
+			},
+			saveIncome(_id) {
+				if (_id) {
+					this.updateIncome(_id);
+				} else {
+					this.addIncome();
+				}
 			}
 		}
 	};
